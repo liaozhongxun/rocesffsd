@@ -1,7 +1,7 @@
 (function(win) {
   var tid;
   function refreshRem() {
-    let designSize = 1852; // 设计图尺寸
+    let designSize = 1920; // 设计图尺寸
     let html = document.documentElement;
     let wW = html.clientWidth; // 窗口宽度
     let rem = (wW * 100) / designSize;
