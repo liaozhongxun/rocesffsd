@@ -13,10 +13,30 @@
                     <div class="b_center">
                         <div class="b_left">
                             <div class="blocks blocks1">
-                                  <el-button type="primary">主要按钮</el-button>
+                                <el-button type="primary">主要按钮</el-button>
+                                <el-select v-model="value" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in options"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
                             </div>
                             <div class="blocks blocks2">
-                                <div class="title">{{titles[3]}}</div>
+                                <div class="title">{{ titles[3] }}</div>
+                                <div class="bl2Info">
+                                    <div
+                                        class="itemLine"
+                                        :class="{ two: !item.status }"
+                                        v-for="(item, index) in bl2infoData"
+                                        :key="index"
+                                    >
+                                        <div class="key">{{ item.key }}</div>
+                                        <div class="val">{{ item.value }}</div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="blocks blocks3">
                                 <BgType1 :title="titles[0]"></BgType1>
@@ -56,7 +76,7 @@
                         </div>
                         <div class="b_right">
                             <div class="blocks blocks5">
-                                <div class="title">{{titles[2]}}</div>
+                                <div class="title">{{ titles[2] }}</div>
                             </div>
                             <div class="blocks blocks6">
                                 <BgType1 :title="titles[1]"></BgType1>
@@ -75,16 +95,60 @@ import BgType1 from "../components/BgType1";
 import BgType2 from "../components/BgType2";
 export default {
     name: "ScreenIndex",
-    data(){
-        return{
-            titles:["社区分离监督概览","投递排行","分类占比","垃圾屋信息","雪品垃圾屋区域分布地图"]
-        }
+    data() {
+        return {
+            titles: [
+                "社区分离监督概览",
+                "投递排行",
+                "分类占比",
+                "垃圾屋信息",
+                "雪品垃圾屋区域分布地图"
+            ],
+            bl2infoData: [
+                { key: "分类管理员", value: "张翠平" },
+                { key: "主管、街道长", value: "眭华翠" },
+                { key: "社区党组织负责人", value: "陈飞" },
+                { key: "小区业委会负责人", value: "林鹤" },
+                { key: "小区物业负责人", value: "阮文琦" },
+                { key: "街道包片负责人", value: "张胜利" },
+                {
+                    key: "垃圾分类中标企业",
+                    value: "福州雪品环境科技有限公司",
+                    status: true
+                }
+            ],
+            options: [
+                {
+                    value: "选项1",
+                    label: "黄金糕"
+                },
+                {
+                    value: "选项2",
+                    label: "双皮奶"
+                },
+                {
+                    value: "选项3",
+                    label: "蚵仔煎"
+                },
+                {
+                    value: "选项4",
+                    label: "龙须面"
+                },
+                {
+                    value: "选项5",
+                    label: "北京烤鸭"
+                }
+            ],
+            value: ""
+        };
     },
     methods: {
         getBuildingdata() {
-            API.POST("/screenApi/screenData/selectBuildingList", {}).then(res => {
-                console.log(res);
-            });
+            API.POST("/screenApi/screenData/selectBuildingList", {}).then(
+                res => {
+                    console.log(res);
+                }
+            );
         },
         getTowndata() {
             API.POST("/screenApi/screenData/selectTownList", {}).then(res => {
@@ -164,66 +228,64 @@ export default {
                 margin-right: 0.3rem;
                 display: flex;
                 flex-direction: column;
-                .bc_top{
+                .bc_top {
                     height: 1.82rem;
                     width: 100%;
                     margin-bottom: 0.2rem;
                     display: flex;
-                    .blocks{
-                        &:nth-child(1){
+                    .blocks {
+                        &:nth-child(1) {
                             margin-right: 0.72rem;
-
                         }
-                        &.blocks4{
+                        &.blocks4 {
                             width: 3.54rem;
                             height: 100%;
                             background: url("../assets/images/w_4.png") center /
-                            cover no-repeat;
-                            .upfont{
+                                cover no-repeat;
+                            .upfont {
                                 width: 1.5rem;
-                                border-bottom: .01rem solid #1cc8e2;
-                                height: .58rem;
-                                line-height:.58rem;
+                                border-bottom: 0.01rem solid #1cc8e2;
+                                height: 0.58rem;
+                                line-height: 0.58rem;
                                 margin: 0 auto;
-                                margin-top: .13rem;
-                                font-size: .20rem;
-                                color:#fff;
+                                margin-top: 0.13rem;
+                                font-size: 0.2rem;
+                                color: #fff;
                                 text-align: center;
                             }
-                            .downvalue{
-                                margin-top: .3rem;
-                                padding-left: .03rem;
+                            .downvalue {
+                                margin-top: 0.3rem;
+                                padding-left: 0.03rem;
                                 display: flex;
-                                .val{
-                                    margin-left: .2rem;
-                                    width: .56rem;
-                                    height: .56rem;
-                                    border: .01rem solid #064f92;
+                                .val {
+                                    margin-left: 0.2rem;
+                                    width: 0.56rem;
+                                    height: 0.56rem;
+                                    border: 0.01rem solid #064f92;
                                     background: #0e2459;
                                     display: flex;
                                     justify-content: center;
                                     align-items: center;
-                                    color:#ffe535;
-                                    font-size: .36rem;
+                                    color: #ffe535;
+                                    font-size: 0.36rem;
                                 }
-                                .unit{
-                                    color:#ffe535;
-                                    margin-left: .07rem;
-                                    line-height: .76rem;
-                                    font-size: .2rem;
+                                .unit {
+                                    color: #ffe535;
+                                    margin-left: 0.07rem;
+                                    line-height: 0.76rem;
+                                    font-size: 0.2rem;
                                 }
                             }
                         }
                     }
-
                 }
-                .bc_bottom{
+                .bc_bottom {
                     flex: 1;
                     width: 100%;
                     position: relative;
-                    .blocks7{
+                    .blocks7 {
                         position: absolute;
-                        left:0;
+                        left: 0;
                         bottom: 0;
                         height: 1.26rem;
                         width: 100%;
@@ -271,6 +333,36 @@ export default {
                         margin-bottom: 0.2rem;
                         background: url("../assets/images/w_2.png") center /
                             cover no-repeat;
+                        display: flex;
+                        flex-direction: column;
+                        .bl2Info {
+                            flex: 1;
+                            padding: 0.2rem;
+
+                            display: flex;
+                            flex-wrap: wrap;
+                            .itemLine {
+                                width: 100%;
+                                margin-bottom: 0.02rem;
+                                margin-right: 0.02rem;
+                                height: 0.5rem;
+                                display: flex;
+                                line-height: 0.5rem;
+                                .key {
+                                    font-size: .16rem;
+                                    color:#fff;
+                                    margin-right: .15rem;
+                                }
+                                .val {
+                                    flex: 1;
+                                    font-size: .22rem;
+                                    color:#09eff4;
+                                }
+                                &.two {
+                                    width: 49%;
+                                }
+                            }
+                        }
                     }
                     &.blocks3 {
                         width: 100%;
@@ -304,13 +396,13 @@ export default {
         }
     }
 }
-.blocks{
+.blocks {
     position: relative;
-    .title{
-        font-size: .2rem;
-        padding-left: .42rem;
-        padding-top: .07rem;
-        color:#fff;
+    .title {
+        font-size: 0.2rem;
+        padding-left: 0.42rem;
+        padding-top: 0.07rem;
+        color: #fff;
     }
 }
 </style>

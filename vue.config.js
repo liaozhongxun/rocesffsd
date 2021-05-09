@@ -4,7 +4,7 @@ const px2rem = require("postcss-px2rem");
 // 2、配置基本大小
 const postcss = px2rem({
     // 基准大小 baseSize，需要和rem.js中相同
-    remUnit: 192  //设计稿宽度除以10
+    remUnit: 100  //设计稿宽度除以10
 });
 
 module.exports = {
