@@ -3,7 +3,18 @@
         <div class="Mask">
             <div class="Main">
                 <div class="header">
-                    <div class="h_left"></div>
+                    <div class="h_left">
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                            </el-option>
+                        </el-select>
+
+                    </div>
                     <div class="h_name">
                         <img src="../assets/images/04.png" />
                     </div>
@@ -13,16 +24,6 @@
                     <div class="b_center">
                         <div class="b_left">
                             <div class="blocks blocks1">
-                                <el-button type="primary">主要按钮</el-button>
-                                <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
-                                    >
-                                    </el-option>
-                                </el-select>
                             </div>
                             <div class="blocks blocks2">
                                 <div class="title">{{ titles[3] }}</div>
@@ -195,6 +196,10 @@ export default {
             flex: 1;
             background: url("../assets/images/01.png") left bottom no-repeat;
             background-size: contain;
+            .el-select{
+                padding-top: .40rem;
+                padding-left: .5rem;
+            }
         }
         .h_name {
             width: 5.28rem;
@@ -268,6 +273,7 @@ export default {
                                     align-items: center;
                                     color: #ffe535;
                                     font-size: 0.36rem;
+                                    box-shadow: 0px 0px 0.37rem rgba(255,255,255, 0.28) inset;
                                 }
                                 .unit {
                                     color: #ffe535;
@@ -405,4 +411,6 @@ export default {
         color: #fff;
     }
 }
+
 </style>
+
