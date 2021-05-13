@@ -4,7 +4,11 @@
             <div class="Main">
                 <div class="header">
                     <div class="h_left">
-                        <el-select v-model="townListValue" placeholder="请选择">
+                        <el-select
+                            v-model="townListValue"
+                            placeholder="请选择"
+                            @change="changeTownList"
+                        >
                             <el-option
                                 v-for="item in townListData"
                                 :key="item.townCode"
@@ -30,12 +34,16 @@
                                 <div class="times">
                                     <div class="zs">
                                         <div class="font">早上</div>
-                                        <div class="font tim">06:00-09:00</div>
+                                        <div class="font tim">
+                                            {{ BuildingInfo.amTime }}
+                                        </div>
                                     </div>
                                     <div class="br"></div>
                                     <div class="zs">
                                         <div class="font">晚上</div>
-                                        <div class="font tim">18:00-21:00</div>
+                                        <div class="font tim">
+                                            {{ BuildingInfo.pmTime }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +91,9 @@
                                                         {{ item.auditorNumber }}
                                                     </div>
                                                     <div class="td">
-                                                        {{ item.collectorNumber }}
+                                                        {{
+                                                            item.collectorNumber
+                                                        }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,10 +109,26 @@
                                         今日收集量
                                     </div>
                                     <div class="downvalue">
-                                        <div class="val">3</div>
-                                        <div class="val">7</div>
-                                        <div class="val">3</div>
-                                        <div class="val">5</div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.dayRubbishNumer[0]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.dayRubbishNumer[1]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.dayRubbishNumer[2]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.dayRubbishNumer[3]
+                                            }}
+                                        </div>
                                         <span class="unit">kg</span>
                                     </div>
                                 </div>
@@ -111,10 +137,26 @@
                                         累计收集量
                                     </div>
                                     <div class="downvalue">
-                                        <div class="val">6</div>
-                                        <div class="val">8</div>
-                                        <div class="val">2</div>
-                                        <div class="val">0</div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.sumRubbishNumer[0]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.sumRubbishNumer[1]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.sumRubbishNumer[2]
+                                            }}
+                                        </div>
+                                        <div class="val">
+                                            {{
+                                                BuildingInfo.sumRubbishNumer[3]
+                                            }}
+                                        </div>
                                         <span class="unit">kg</span>
                                     </div>
                                 </div>
@@ -125,12 +167,15 @@
                                         style="width:100%;height:100%"
                                         slot="center"
                                     >
-                                        <ScreenMap></ScreenMap>
+                                        <ScreenMap
+                                            :MarkerData="addressList"
+                                        ></ScreenMap>
                                     </div>
                                 </BgType2>
                                 <el-select
                                     v-model="townBuildValue"
                                     placeholder="请选择"
+                                    @change="changeBuildList"
                                 >
                                     <el-option
                                         v-for="item in townBuildData"
@@ -144,36 +189,52 @@
                                     <div class="bl7warp">
                                         <div class="item">
                                             <div class="upval">
-                                                500/<span class="small"
-                                                    >900</span
-                                                >
+                                                {{
+                                                    BuildingInfo.registerNumber
+                                                }}/<span class="small">{{
+                                                    BuildingInfo.sumNumber
+                                                }}</span>
                                             </div>
                                             <div class="downval">
                                                 已注册数/总数
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <div class="upval">500</div>
+                                            <div class="upval">
+                                                {{ BuildingInfo.dayPutNumber }}
+                                            </div>
                                             <div class="downval">
                                                 今日参与投放人次
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <div class="upval">80%</div>
+                                            <div class="upval">
+                                                {{
+                                                    BuildingInfo.dayAccuracyNumber
+                                                }}%
+                                            </div>
                                             <div class="downval">
                                                 今日抽样准确率
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <div class="upval">500</div>
+                                            <div class="upval">
+                                                {{
+                                                    BuildingInfo.dayMissentNumber
+                                                }}
+                                            </div>
                                             <div class="downval">
-                                                今日抽样准确率
+                                                今日误投警报
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <div class="upval">1356</div>
+                                            <div class="upval">
+                                                {{
+                                                    BuildingInfo.sumMissentNumber
+                                                }}
+                                            </div>
                                             <div class="downval">
-                                                今日抽样准确率
+                                                累计误投工单数
                                             </div>
                                         </div>
                                     </div>
@@ -240,55 +301,139 @@ export default {
             value: "",
             tdph_myChart: null,
             flzb_myChart: null,
-            tabsData: [
-                // ["后洲街道水巷社区", 15, 16, 15],
-                // ["后洲街道下杭社区", 15, 16, 15],
-                // ["后洲街道大同社区", 15, 16, 15],
-                // ["后洲街道天华社区", 15, 16, 15],
-                // ["后洲街道龙岭社区", 15, 16, 15],
-                // ["后洲街道上杭社区", 15, 16, 15],
-                // ["后洲街道安平社区", 15, 16, 15],
-                // ["后洲街道迎晖社区", 15, 16, 15],
-                // ["后洲街道中亭街社区", 15, 16, 15]
-            ]
+            tabsData: [],
+            tdphData: [],
+            addressList: [], //小区点标记数据
+            BuildingInfo: {
+                dayRubbishNumer: "0000",
+                sumRubbishNumer: "0000",
+                amTime: "00-00",
+                pmTime: "00-00",
+                registerNumber: 0,
+                sumNumber: 0,
+                dayPutNumber: 0,
+                dayAccuracyNumber: 0,
+                dayMissentNumber: 0,
+                sumMissentNumber: 0
+            } //小区其他信息
         };
     },
     methods: {
-        getBuildingdata() {
-            //获取小区下拉
-            API.POST("/screenApi/screenData/selectBuildingList", {}).then(
-                res => {
-                    this.townBuildData = res.object;
-                    this.townBuildValue = this.townBuildData[0].buildingCode;
-                }
-            );
+        changeTownList(data) {
+            this.townListValue = data;
+            this.getBuildingdata();
+            this.getScreenDataTownInfo();
+        },
+        changeBuildList(data) {
+            this.townBuildValue = data;
+            this.getScreenDataBuildingInfo();
         },
         getTowndata() {
             //获取街道
             API.POST("/screenApi/screenData/selectTownList", {}).then(res => {
                 this.townListData = res.object;
                 this.townListValue = this.townListData[0].townCode;
+                this.getBuildingdata();
                 this.getScreenDataTownInfo();
             });
+        },
+        getBuildingdata() {
+            //获取小区下拉
+            API.POST("/screenApi/screenData/selectBuildingList", {}).then(
+                res => {
+                    this.townBuildData = res.object;
+                    this.townBuildValue = this.townBuildData[0].buildingCode;
+                    this.getScreenDataBuildingInfo();
+                }
+            );
         },
         getScreenDataTownInfo() {
             //街道信息
             API.POST("/screenApi/screenData/getScreenDataTownInfo", {
-                townCode:this.townListValue
+                townCode: this.townListValue
             }).then(res => {
-                console.log(res);
-                this.tabsData = res.object.streetList
+                this.tabsData = res.object.streetList;
+                this.tdphData = res.object.rankingList;
+                this.tdph_echarts();
             });
         },
         getScreenDataBuildingInfo() {
             //小区信息
+            API.POST("/screenApi/screenData/getScreenDataBuildingInfo", {
+                townCode: this.townListValue,
+                buildingCode: this.townBuildValue
+            }).then(res => {
+                this.addressList = res.object.addressList;
+                this.BuildingInfo = Object.assign({}, res.object);
+                this.BuildingInfo.dayRubbishNumer = this.fullLeng(
+                    this.BuildingInfo.dayRubbishNumer
+                );
+                this.BuildingInfo.sumRubbishNumer = this.fullLeng(
+                    this.BuildingInfo.sumRubbishNumer
+                );
+                console.log(this.BuildingInfo);
+                this.bl2infoData[0].value = this.BuildingInfo.managerName;
+                this.bl2infoData[1].value = this.BuildingInfo.streetName;
+                this.bl2infoData[2].value = this.BuildingInfo.communityHeadName;
+                this.bl2infoData[3].value = this.BuildingInfo.industryAuthorityName;
+                this.bl2infoData[4].value = this.BuildingInfo.propertyHeadName;
+                this.bl2infoData[5].value = this.BuildingInfo.streetHeadName;
+                this.bl2infoData[6].value = this.BuildingInfo.companyName;
+
+                // console.log(res.object)
+                // console.log(JSON.stringify(res.object) == "{}")
+
+                if (JSON.stringify(res.object) == "{}") {
+                    this.BuildingInfo = {
+                        dayRubbishNumer: "0000",
+                        sumRubbishNumer: "0000",
+                        amTime: "00-00",
+                        pmTime: "00-00",
+                        registerNumber: 0,
+                        sumNumber: 0,
+                        dayPutNumber: 0,
+                        dayAccuracyNumber: 0,
+                        dayMissentNumber: 0,
+                        sumMissentNumber: 0
+                    }; //小区其他信息
+                }
+
+                this.flzb_echarts();
+            });
+        },
+        fullLeng(val) {
+            if (Number(val)) {
+                val = val + "";
+                if (val.length == 1) {
+                    val = "000" + val;
+                } else if (val.length == 2) {
+                    val = "00" + val;
+                } else if (val.length == 3) {
+                    val = "0" + val;
+                }
+                return val.split("");
+            } else {
+                return "0000";
+            }
         },
         tdph_echarts() {
+            let yAxisData = [];
+            let seriesDataKhs = [];
+            let seriesDataQt = [];
+            let seriesDataYh = [];
+            let seriesDataCy = [];
             this.tdph_myChart = echarts.init(
                 document.getElementById("tdph_echarts")
             );
-            // 绘制图表
-            this.tdph_myChart.setOption({
+
+            this.tdphData.map(item => {
+                yAxisData.push(item.buildingName);
+                seriesDataKhs.push(item.recoverableWeight);
+                seriesDataQt.push(item.elseWasteWeight);
+                seriesDataYh.push(item.harmfulWasteWeight);
+                seriesDataCy.push(item.foodWasteWeight);
+            });
+            let option = {
                 tooltip: {
                     trigger: "axis",
                     axisPointer: {
@@ -324,14 +469,7 @@ export default {
                 },
                 yAxis: {
                     type: "category",
-                    data: [
-                        "双杭城1号屋",
-                        "美伦浩洋B区",
-                        "美伦浩洋A区",
-                        "群升御园1区",
-                        "金马大厦",
-                        "水巷新村"
-                    ],
+                    data: yAxisData,
 
                     axisLine: {
                         lineStyle: {
@@ -349,7 +487,7 @@ export default {
                         emphasis: {
                             focus: "series"
                         },
-                        data: [320, 302, 301, 334, 390, 330, 320]
+                        data: seriesDataKhs
                     },
                     {
                         name: "厨余",
@@ -359,7 +497,7 @@ export default {
                         emphasis: {
                             focus: "series"
                         },
-                        data: [120, 132, 101, 134, 90, 230, 210]
+                        data: seriesDataCy
                     },
                     {
                         name: "有害",
@@ -369,7 +507,7 @@ export default {
                         emphasis: {
                             focus: "series"
                         },
-                        data: [220, 182, 191, 234, 290, 330, 310]
+                        data: seriesDataYh
                     },
                     {
                         name: "其他",
@@ -379,12 +517,16 @@ export default {
                         emphasis: {
                             focus: "series"
                         },
-                        data: [150, 212, 201, 154, 190, 330, 410]
+                        data: seriesDataQt
                     }
                 ]
-            });
+            };
+
+            // 绘制图表
+            this.tdph_myChart.setOption(option);
         },
         flzb_echarts() {
+            let that = this;
             // 基于准备好的dom，初始化echarts实例
             this.flzb_myChart = echarts.init(
                 document.getElementById("flzb_echarts")
@@ -437,10 +579,22 @@ export default {
                             top: "1%"
                         },
                         data: [
-                            { value: 1048, name: "其他" },
-                            { value: 735, name: "可回收" },
-                            { value: 580, name: "厨余垃圾" },
-                            { value: 484, name: "有害垃圾" }
+                            {
+                                value: that.BuildingInfo.elseWasteWeight,
+                                name: "其他"
+                            },
+                            {
+                                value: that.BuildingInfo.recoverableWeight,
+                                name: "可回收"
+                            },
+                            {
+                                value: that.BuildingInfo.foodWasteWeight,
+                                name: "厨余"
+                            },
+                            {
+                                value: that.BuildingInfo.harmfulWasteWeight,
+                                name: "有害"
+                            }
                         ]
                     }
                 ]
@@ -454,11 +608,8 @@ export default {
     },
     created() {
         this.getTowndata();
-        this.getBuildingdata();
     },
     mounted() {
-        this.flzb_echarts();
-        this.tdph_echarts();
         window.onresize = () => {
             //窗口变化自适应
             return (() => {

@@ -1,5 +1,8 @@
 <template>
+    <div class="mapwarp">
+    <div class="showdow"></div>
     <div class="ScreenMap" id="ScreenMap"></div>
+    </div>
 </template>
 
 <script>
@@ -77,5 +80,23 @@ export default {
 .ScreenMap {
     height: 100%;
     width: 100%;
+}
+.mapwarp{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.showdow{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    //box-shadow: 0px 0px 0.47rem rgba(73, 162, 245, 0.5) inset;
+    //box-shadow: 0px 0px 0.47rem rgba(20,179,188,.1) inset;
+    box-shadow: 0px 0px 0.47rem rgba(17, 123, 165, 0.6) inset;
+    
 }
 </style>

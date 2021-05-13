@@ -11,6 +11,7 @@
             <div class="center"></div>
             <div class="down"></div>
             <div class="slotcenter">
+                <!-- <div class="boxshow"></div> -->
                 <slot name="center"></slot>
             </div>
         </div>
@@ -37,11 +38,22 @@ export default {
     position: absolute;
     height: 110%;
     width: 100%;
-    padding:.5rem .3rem 0 .3rem;
+    padding:0rem .0rem 0 .0rem;
     left: 0;
     top: 0;
     opacity: .99;
 }
+
+// .boxshow{
+//     position: absolute;
+//     width: 100%;
+//     height: 90%;
+//     background: #f00;
+//     left:0;
+//     bottom:0;
+//     z-index: 1;
+    
+// }
 .BgType2 {
     display: flex;
     flex-direction: column;
@@ -52,12 +64,14 @@ export default {
     position: relative;
 
     .up {
-        height: 1.13rem;
+        height: .3rem;
         color: #fff;
         font-size: 0.2rem;
         padding-left: 0.45rem;
         padding-top: 0.08rem;
-        background: url("../assets/images/map_up.png") center / cover no-repeat;
+        background: url("../assets/images/map_up.png") top / 100% no-repeat;
+        position: relative;
+        z-index: 222;
     }
     .center {
         flex: 1;

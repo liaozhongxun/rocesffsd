@@ -251,7 +251,79 @@
                             <div class="blocks blocks6">
                                 <BgType1 :title="titles[1]">
                                     <div slot="center" class="tdph_echarts">
-                                        <div id="tdph_echarts"></div>
+                                        <!-- <div id="tdph_echarts"></div> -->
+                                        <div class="titletag">
+                                            <div class="item">
+                                                <div class="colors c1"></div>
+                                                <div class="font">可回收</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="colors c2"></div>
+                                                <div class="font">厨余</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="colors c3"></div>
+                                                <div class="font">有害</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="colors c4"></div>
+                                                <div class="font">其他</div>
+                                            </div>
+                                        </div>
+                                        <div class="chartlist">
+                                            <ul class="tdphList">
+                                                <li
+                                                    class="item"
+                                                    v-for="item in tdphData"
+                                                    :key="item.rowNumber"
+                                                >
+                                                    <div class="index">
+                                                        {{ item.rowNumber }}
+                                                    </div>
+                                                    <div class="name">
+                                                        {{ item.buildingName }}
+                                                    </div>
+                                                    <div class="colors">
+                                                        <div
+                                                            class="c1"
+                                                            :style="{
+                                                                width: colorwidth(
+                                                                    item,
+                                                                    'recoverableWeight'
+                                                                )
+                                                            }"
+                                                        ></div>
+                                                        <div
+                                                            class="c2"
+                                                            :style="{
+                                                                width: colorwidth(
+                                                                    item,
+                                                                    'foodWasteWeight'
+                                                                )
+                                                            }"
+                                                        ></div>
+                                                        <div
+                                                            class="c3"
+                                                            :style="{
+                                                                width: colorwidth(
+                                                                    item,
+                                                                    'harmfulWasteWeight'
+                                                                )
+                                                            }"
+                                                        ></div>
+                                                        <div
+                                                            class="c4"
+                                                            :style="{
+                                                                width: colorwidth(
+                                                                    item,
+                                                                    'elseWasteWeight'
+                                                                )
+                                                            }"
+                                                        ></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </BgType1>
                             </div>
@@ -319,6 +391,15 @@ export default {
         };
     },
     methods: {
+        colorwidth(item, type) {
+            return (item[type]/(
+                item.recoverableWeight +
+                item.foodWasteWeight +
+                item.harmfulWasteWeight +
+                item.elseWasteWeight
+            ))*100 + '%'
+            
+        },
         changeTownList(data) {
             this.townListValue = data;
             this.getBuildingdata();
@@ -354,7 +435,7 @@ export default {
             }).then(res => {
                 this.tabsData = res.object.streetList;
                 this.tdphData = res.object.rankingList;
-                this.tdph_echarts();
+                // this.tdph_echarts();
             });
         },
         getScreenDataBuildingInfo() {
@@ -470,7 +551,6 @@ export default {
                 yAxis: {
                     type: "category",
                     data: yAxisData,
-
                     axisLine: {
                         lineStyle: {
                             color: "#fff",
@@ -589,11 +669,11 @@ export default {
                             },
                             {
                                 value: that.BuildingInfo.foodWasteWeight,
-                                name: "厨余垃圾"
+                                name: "厨余"
                             },
                             {
                                 value: that.BuildingInfo.harmfulWasteWeight,
-                                name: "有害垃圾"
+                                name: "有害"
                             }
                         ]
                     }
@@ -614,7 +694,7 @@ export default {
             //窗口变化自适应
             return (() => {
                 this.flzb_myChart.resize();
-                this.tdph_myChart.resize();
+                // this.tdph_myChart.resize();
             })();
         };
         // setTimeout(() => {
@@ -641,6 +721,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ul li {
+    list-style: none;
+}
 .ScreenIndex {
     width: 100%;
     height: 100%;
@@ -996,12 +1079,126 @@ export default {
                         // background: url('../assets/images/w_3.png') center /cover no-repeat;
                         .tdph_echarts {
                             width: 100%;
-                            height: 100%;
+                            height: 96%;
                             position: relative;
                             #tdph_echarts {
                                 width: 100%;
                                 height: 100%;
                                 position: absolute;
+                            }
+                            display: flex;
+                            flex-direction: column;
+                            //style2
+                            .titletag {
+                                width: 100%;
+                                padding: 0.1rem 0;
+                                display: flex;
+                                height: 0.4rem;
+                                .item {
+                                    flex: 1;
+                                    height: 100%;
+                                    display: flex;
+                                    .colors {
+                                        width: 0.5rem;
+                                        height: 100%;
+                                        &.c1 {
+                                            background: -webkit-linear-gradient(
+                                                left,
+                                                rgba(0, 0, 0, 0),
+                                                rgb(35, 93, 201)
+                                            );
+                                        }
+                                        &.c2 {
+                                            background: -webkit-linear-gradient(
+                                                left,
+                                                rgba(0, 0, 0, 0),
+                                                rgb(3, 133, 65)
+                                            );
+                                        }
+                                        &.c3 {
+                                            background: -webkit-linear-gradient(
+                                                left,
+                                                rgba(0, 0, 0, 0),
+                                                rgb(215, 5, 8)
+                                            );
+                                        }
+                                        &.c4 {
+                                            background: -webkit-linear-gradient(
+                                                left,
+                                                rgba(0, 0, 0, 0),
+                                                rgb(84, 92, 94)
+                                            );
+                                        }
+                                    }
+                                    .font {
+                                        color: #fff;
+                                        font-size: 0.15rem;
+                                        line-height: 0.2rem;
+                                        margin-left: 0.03rem;
+                                    }
+                                }
+                            }
+                            .chartlist {
+                                width: 100%;
+                                height: 100%;
+                                flex: 1;
+                                overflow: auto;
+                                .tdphList {
+                                    padding: 0.2rem 0;
+                                    width: 100%;
+                                    .item {
+                                        display: flex;
+                                        height: 0.5rem;
+                                        justify-content: center;
+                                        align-items: center;
+                                        .index {
+                                            color: #fff;
+                                            width: 0.5rem;
+                                            text-align: center;
+                                            line-height: 0.5rem;
+                                        }
+                                        .name {
+                                            line-height: 0.5rem;
+                                            font-size: 0.18rem;
+                                            color: #fff;
+                                            margin-right: 0.1rem;
+                                        }
+                                        .colors {
+                                            flex: 1;
+                                            height: 0.2rem;
+                                            display: flex;
+                                            .c1 {
+                                                height: 100%;
+                                                background: -webkit-linear-gradient(
+                                                    left,
+                                                    rgba(0, 0, 0, 0),
+                                                    rgb(35, 93, 201)
+                                                );
+                                            }
+                                            .c2 {
+                                                background: -webkit-linear-gradient(
+                                                    left,
+                                                    rgba(0, 0, 0, 0),
+                                                    rgb(3, 133, 65)
+                                                );
+                                            }
+                                            .c3 {
+                                                background: -webkit-linear-gradient(
+                                                    left,
+                                                    rgba(0, 0, 0, 0),
+                                                    rgb(215, 5, 8)
+                                                );
+                                            }
+                                            .c4 {
+                                                background: -webkit-linear-gradient(
+                                                    left,
+                                                    rgba(0, 0, 0, 0),
+                                                    rgb(84, 92, 94)
+                                                );
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
