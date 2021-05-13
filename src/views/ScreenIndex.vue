@@ -278,7 +278,11 @@
                                                     :key="item.rowNumber"
                                                 >
                                                     <div class="index">
-                                                        {{ item.rowNumber }}
+                                                        
+                                                        <img v-if="item.rowNumber==1" src="../assets/images/nb1.png" width="50%">
+                                                        <img v-if="item.rowNumber==2" src="../assets/images/nb2.png" width="80%">
+                                                        <img v-if="item.rowNumber==3" src="../assets/images/nb3.png" width="80%">
+                                                        <div v-if="item.rowNumber>3">{{ item.rowNumber }}</div>
                                                     </div>
                                                     <div class="name">
                                                         {{ item.buildingName }}
@@ -1156,6 +1160,9 @@ ul li {
                                             width: 0.5rem;
                                             text-align: center;
                                             line-height: 0.5rem;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
                                         }
                                         .name {
                                             line-height: 0.5rem;
