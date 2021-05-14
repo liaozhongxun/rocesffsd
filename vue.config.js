@@ -17,6 +17,7 @@ module.exports = {
             }
         }
     },
+    publicPath:"./",
     // 配置跨域代理
     devServer: {
         // Paths

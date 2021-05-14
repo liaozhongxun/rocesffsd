@@ -5,6 +5,7 @@
       <div class="smBg"></div>
       <div class="smBg"></div>
       <div class="smBg"></div> -->
+            <div class="rtbg"></div>
             <div class="up">
                 {{ title }}
             </div>
@@ -52,7 +53,7 @@ export default {
 //     left:0;
 //     bottom:0;
 //     z-index: 1;
-    
+
 // }
 .BgType2 {
     display: flex;
@@ -62,6 +63,18 @@ export default {
     border-radius: 0.03rem;
     overflow: hidden;
     position: relative;
+    .rtbg{
+        height: .34rem;
+        width: 3.45rem;
+        background: #000;
+        top:0;
+        right: 0;
+        position: absolute;
+        z-index: 221;
+        transform: skewX(39deg);
+        box-shadow: 0px 0px 0.40rem rgba(17, 123, 165, 0.6);
+        border-radius: 0 0 0 .02rem;
+    }
 
     .up {
         height: .3rem;
@@ -69,7 +82,7 @@ export default {
         font-size: 0.2rem;
         padding-left: 0.45rem;
         padding-top: 0.08rem;
-        background: url("../assets/images/map_up.png") top / 100% no-repeat;
+        background: url("../assets/images/map_title.png") top / 100% no-repeat;
         position: relative;
         z-index: 222;
     }

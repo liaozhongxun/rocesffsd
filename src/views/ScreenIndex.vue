@@ -278,7 +278,7 @@
                                                     :key="item.rowNumber"
                                                 >
                                                     <div class="index">
-                                                        
+
                                                         <img v-if="item.rowNumber==1" src="../assets/images/nb1.png" width="50%">
                                                         <img v-if="item.rowNumber==2" src="../assets/images/nb2.png" width="80%">
                                                         <img v-if="item.rowNumber==3" src="../assets/images/nb3.png" width="80%">
@@ -402,7 +402,7 @@ export default {
                 item.harmfulWasteWeight +
                 item.elseWasteWeight
             ))*100 + '%'
-            
+
         },
         changeTownList(data) {
             this.townListValue = data;
@@ -659,7 +659,7 @@ export default {
                         grid: {
                             left: "3%",
                             right: "8%",
-                            // bottom: "3%",
+                            bottom: "3%",
                             top: "1%"
                         },
                         data: [
