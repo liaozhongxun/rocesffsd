@@ -88,13 +88,13 @@ export default {
     }
     .center {
         flex: 1;
-        background: url("../assets/images/map_center.png") repeat;
+        // background: url("../assets/images/map_center.png") repeat;
         background-size: contain;
     }
     .down {
         height: 0.43rem;
-        background: url("../assets/images/map_bottom.png") center / cover
-            no-repeat;
+        // background: url("../assets/images/map_bottom.png") center / cover
+        //     no-repeat;
     }
 }
 </style>

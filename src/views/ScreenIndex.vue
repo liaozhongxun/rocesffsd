@@ -278,52 +278,116 @@
                                                     :key="item.rowNumber"
                                                 >
                                                     <div class="index">
-
-                                                        <img v-if="item.rowNumber==1" src="../assets/images/nb1.png" width="50%">
-                                                        <img v-if="item.rowNumber==2" src="../assets/images/nb2.png" width="80%">
-                                                        <img v-if="item.rowNumber==3" src="../assets/images/nb3.png" width="80%">
-                                                        <div v-if="item.rowNumber>3">{{ item.rowNumber }}</div>
+                                                        <img
+                                                            v-if="
+                                                                item.rowNumber ==
+                                                                    1
+                                                            "
+                                                            src="../assets/images/nb1.png"
+                                                            width="50%"
+                                                        />
+                                                        <img
+                                                            v-if="
+                                                                item.rowNumber ==
+                                                                    2
+                                                            "
+                                                            src="../assets/images/nb2.png"
+                                                            width="80%"
+                                                        />
+                                                        <img
+                                                            v-if="
+                                                                item.rowNumber ==
+                                                                    3
+                                                            "
+                                                            src="../assets/images/nb3.png"
+                                                            width="80%"
+                                                        />
+                                                        <div
+                                                            v-if="
+                                                                item.rowNumber >
+                                                                    3
+                                                            "
+                                                        >
+                                                            {{ item.rowNumber }}
+                                                        </div>
                                                     </div>
+
                                                     <div class="name">
                                                         {{ item.buildingName }}
                                                     </div>
                                                     <div class="colors">
-                                                        <div
-                                                            class="c1"
-                                                            :style="{
-                                                                width: colorwidth(
-                                                                    item,
-                                                                    'recoverableWeight'
-                                                                )
-                                                            }"
-                                                        ></div>
-                                                        <div
-                                                            class="c2"
-                                                            :style="{
-                                                                width: colorwidth(
-                                                                    item,
-                                                                    'foodWasteWeight'
-                                                                )
-                                                            }"
-                                                        ></div>
-                                                        <div
-                                                            class="c3"
-                                                            :style="{
-                                                                width: colorwidth(
-                                                                    item,
-                                                                    'harmfulWasteWeight'
-                                                                )
-                                                            }"
-                                                        ></div>
-                                                        <div
-                                                            class="c4"
-                                                            :style="{
-                                                                width: colorwidth(
-                                                                    item,
-                                                                    'elseWasteWeight'
-                                                                )
-                                                            }"
-                                                        ></div>
+                                                        <el-tooltip
+                                                            class="item"
+                                                            effect="dark"
+                                                            :content="
+                                                                item.recoverableWeight
+                                                            "
+                                                            placement="top"
+                                                        >
+                                                            <div
+                                                                class="c1"
+                                                                :style="{
+                                                                    width: colorwidth(
+                                                                        item,
+                                                                        'recoverableWeight'
+                                                                    )
+                                                                }"
+                                                            ></div>
+                                                        </el-tooltip>
+                                                        <el-tooltip
+                                                            class="item"
+                                                            effect="dark"
+                                                            :content="
+                                                                item.foodWasteWeight
+                                                            "
+                                                            placement="top"
+                                                        >
+                                                            <div
+                                                                class="c2"
+                                                                :style="{
+                                                                    width: colorwidth(
+                                                                        item,
+                                                                        'foodWasteWeight'
+                                                                    )
+                                                                }"
+                                                            ></div>
+                                                        </el-tooltip>
+                                                        <el-tooltip
+                                                            class="item"
+                                                            effect="dark"
+                                                            :content="
+                                                                item.harmfulWasteWeight
+                                                            "
+                                                            placement="top"
+                                                        >
+                                                            <div
+                                                                class="c3"
+                                                                :style="{
+                                                                    width: colorwidth(
+                                                                        item,
+                                                                        'harmfulWasteWeight'
+                                                                    )
+                                                                }"
+                                                            ></div>
+                                                        </el-tooltip>
+                                                        <el-tooltip
+                                                            class="item"
+                                                            effect="dark"
+                                                            :content="
+                                                                item.elseWasteWeight
+                                                            "
+                                                            placement="top"
+                                                        >
+                                                            <div
+                                                                class="c4"
+                                                                :style="{
+                                                                    width: colorwidth(
+                                                                        item,
+                                                                        'elseWasteWeight'
+                                                                    )
+                                                                }"
+                                                            ></div>
+                                                        </el-tooltip>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -395,14 +459,19 @@ export default {
         };
     },
     methods: {
+        gitte(item) {
+            return `可回收:${item.recoverableWeight},厨余:${item.foodWasteWeight},有害:${item.harmfulWasteWeight},其他:${item.elseWasteWeight}`;
+        },
         colorwidth(item, type) {
-            return (item[type]/(
-                item.recoverableWeight +
-                item.foodWasteWeight +
-                item.harmfulWasteWeight +
-                item.elseWasteWeight
-            ))*100 + '%'
-
+            return (
+                (item[type] /
+                    (item.recoverableWeight +
+                        item.foodWasteWeight +
+                        item.harmfulWasteWeight +
+                        item.elseWasteWeight)) *
+                    100 +
+                "%"
+            );
         },
         changeTownList(data) {
             this.townListValue = data;
@@ -439,6 +508,7 @@ export default {
             }).then(res => {
                 this.tabsData = res.object.streetList;
                 this.tdphData = res.object.rankingList;
+                // this.tdphData = this.tdphData.concat(this.tdphData)
                 // this.tdph_echarts();
             });
         },
@@ -620,11 +690,14 @@ export default {
                 tooltip: {
                     trigger: "item"
                 },
+
                 legend: {
-                    bottom: "0%",
+                    bottom: "-2%",
                     left: "center",
+                    icon: "circle",
                     textStyle: {
-                        color: "#fff"
+                        color: ["#545C5E", "#235DC9", "#038541", "#D70508"],
+                        fontWeight:"600"
                     }
                     // data: [
                     //     {
@@ -636,50 +709,82 @@ export default {
                     //     }
                     // ]
                 },
+                // grid: {
+                //     left: "3%",
+                //     right: "80%",
+                //     bottom: "9%"
+                //     // top: "1%"
+                // },
+
                 series: [
                     {
                         name: "类型",
                         type: "pie",
-                        radius: ["40%", "70%"],
-                        avoidLabelOverlap: false,
+                        radius: ["30%", "50%"],
+                        avoidLabelOverlap: true,
                         label: {
                             show: false,
                             position: "center"
                         },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: "40",
-                                fontWeight: "bold"
-                            }
+                            // label: {
+                            //     show: true,
+                            //     fontSize: "40",
+                            //     fontWeight: "bold"
+                            // }
                         },
                         labelLine: {
-                            show: false
+                            show: true
                         },
-                        grid: {
-                            left: "3%",
-                            right: "8%",
-                            bottom: "3%",
-                            top: "1%"
-                        },
+
                         data: [
                             {
                                 value: that.BuildingInfo.elseWasteWeight,
-                                name: "其他"
+                                name: "其他",
+                                itemStyle: { color: "#545C5E" }
                             },
                             {
                                 value: that.BuildingInfo.recoverableWeight,
-                                name: "可回收"
+                                name: "可回收",
+                                itemStyle: { color: "#235DC9" }
                             },
                             {
                                 value: that.BuildingInfo.foodWasteWeight,
-                                name: "厨余"
+                                name: "厨余垃圾",
+                                itemStyle: { color: "#038541" },
+                                textStyle: { color: "#f01" }
                             },
                             {
                                 value: that.BuildingInfo.harmfulWasteWeight,
-                                name: "有害"
+                                name: "有害垃圾",
+                                itemStyle: { color: "#D70508" }
                             }
-                        ]
+                        ],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    //此处为指示线文字
+                                    show: true,
+                                    textStyle: {
+                                        fontWeight: 200,
+                                        fontSize: 10, //文字的字体大小
+                                        color: "#405978"
+                                    },
+                                    formatter: function(p) {
+                                        //指示线对应文字
+                                        console.log(p);
+                                        return p.percent + "%";
+                                    }
+                                },
+                                labelLine: {
+                                    //指示线状态
+                                    show: true,
+                                    smooth: 0.1,
+                                    length: 20,
+                                    length2: 20
+                                }
+                            }
+                        }
                     }
                 ]
             });
@@ -1070,7 +1175,7 @@ ul li {
 
                             #flzb_echarts {
                                 width: 90%;
-                                height: 90%;
+                                height: 100%;
                                 position: absolute;
                                 top: -0.2rem;
                             }
@@ -1183,6 +1288,7 @@ ul li {
                                                 );
                                             }
                                             .c2 {
+                                                height: 100%;
                                                 background: -webkit-linear-gradient(
                                                     left,
                                                     rgba(0, 0, 0, 0),
@@ -1190,6 +1296,7 @@ ul li {
                                                 );
                                             }
                                             .c3 {
+                                                height: 100%;
                                                 background: -webkit-linear-gradient(
                                                     left,
                                                     rgba(0, 0, 0, 0),
@@ -1197,6 +1304,7 @@ ul li {
                                                 );
                                             }
                                             .c4 {
+                                                height: 100%;
                                                 background: -webkit-linear-gradient(
                                                     left,
                                                     rgba(0, 0, 0, 0),
@@ -1248,3 +1356,8 @@ ul li {
     background-color: rgb(92, 97, 115);
 }
 </style>
+<style>
+.el-tooltip__popper.is-dark {
+    color: #fff !important;
+}</style
+>>
