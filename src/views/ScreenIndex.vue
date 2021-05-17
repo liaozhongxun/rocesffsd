@@ -292,7 +292,7 @@
                                                                     2
                                                             "
                                                             src="../assets/images/nb2.png"
-                                                            width="80%"
+                                                            width="50%"
                                                         />
                                                         <img
                                                             v-if="
@@ -300,7 +300,7 @@
                                                                     3
                                                             "
                                                             src="../assets/images/nb3.png"
-                                                            width="80%"
+                                                            width="50%"
                                                         />
                                                         <div
                                                             v-if="
@@ -320,7 +320,7 @@
                                                             class="item"
                                                             effect="dark"
                                                             :content="
-                                                                item.recoverableWeight
+                                                                String(item.recoverableWeight)
                                                             "
                                                             placement="top"
                                                         >
@@ -338,7 +338,7 @@
                                                             class="item"
                                                             effect="dark"
                                                             :content="
-                                                                item.foodWasteWeight
+                                                                String(item.foodWasteWeight)
                                                             "
                                                             placement="top"
                                                         >
@@ -356,7 +356,7 @@
                                                             class="item"
                                                             effect="dark"
                                                             :content="
-                                                                item.harmfulWasteWeight
+                                                                String(item.harmfulWasteWeight)
                                                             "
                                                             placement="top"
                                                         >
@@ -374,7 +374,7 @@
                                                             class="item"
                                                             effect="dark"
                                                             :content="
-                                                                item.elseWasteWeight
+                                                                String(item.elseWasteWeight)
                                                             "
                                                             placement="top"
                                                         >
@@ -415,7 +415,7 @@ export default {
     data() {
         return {
             titles: [
-                "社区分离监督概览",
+                "社区分类监督概览",
                 "投递排行",
                 "分类占比",
                 "垃圾屋信息",
@@ -493,7 +493,9 @@ export default {
         },
         getBuildingdata() {
             //获取小区下拉
-            API.POST("/screenApi/screenData/selectBuildingList", {}).then(
+            API.POST("/screenApi/screenData/selectBuildingList", {
+                townCode:this.townListValue
+            }).then(
                 res => {
                     this.townBuildData = res.object;
                     this.townBuildValue = this.townBuildData[0].buildingCode;
@@ -772,7 +774,7 @@ export default {
                                     },
                                     formatter: function(p) {
                                         //指示线对应文字
-                                        console.log(p);
+                                        // console.log(p);
                                         return p.percent + "%";
                                     }
                                 },

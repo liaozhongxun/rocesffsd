@@ -22,10 +22,11 @@
 <script>
 export default {
     name: "BgType2",
-    props: {
-        msg: String,
-        title: String
-    }
+    props:['msg','title']
+    // props: {
+    //     msg: String,
+    //     title: String
+    // }
 };
 </script>
 

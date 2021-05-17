@@ -18,6 +18,12 @@ module.exports = {
         }
     },
     publicPath: "./",
+    productionSourceMap: true,
+    // configureWebpack: config => {
+    //     if (debug) { // 开发环境配置
+    //         config.devtool = 'source-map'
+    //     }
+    // },
     // 配置跨域代理
     devServer: {
         // Paths
