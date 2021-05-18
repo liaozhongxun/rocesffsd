@@ -106,7 +106,7 @@
                             <div class="bc_top">
                                 <div class="blocks blocks4">
                                     <div class="upfont">
-                                        今日收集量
+                                        今日投放量
                                     </div>
                                     <div class="downvalue">
                                         <div class="val">
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="blocks blocks4">
                                     <div class="upfont">
-                                        累计收集量
+                                        当月投放量
                                     </div>
                                     <div class="downvalue">
                                         <div class="val">

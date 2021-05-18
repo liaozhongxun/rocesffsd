@@ -52,7 +52,7 @@ export default {
             //     image: require("../assets/images/map_mark.png"), // Icon的图像
             //     imageSize: new AMap.Size(25, 30)
             // });
-            let markers = []
+            // let markers = []
             that.MarkerData.map(item => {
                 let marker = null;
 
@@ -69,7 +69,7 @@ export default {
                     imageSize: new AMap.Size(36, 32),
                     type:2
                 })
-     
+
                 marker = new AMap.Marker({
                     position: new AMap.LngLat(
                         item.longitude,
@@ -79,8 +79,8 @@ export default {
                     icon: icon
                 });
 
-                this.markers.push(marker)
-            
+                // this.markers.push(marker)
+
 
                 var clickHandle = AMap.event.addListener(marker, 'click', function(e) {
                     if(e.target.De.icon.De.type == 1){
